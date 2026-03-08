@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Bell, Menu } from 'lucide-react';
+import { Search, Bell, Menu, Moon, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -13,18 +13,25 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import { UserRole } from '@/types';
 
 export function TopNav() {
-  const { user, switchRole, logout } = useAuth();
+  const { user, switchRole, logout, isDarkMode, toggleDarkMode } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const roles: { value: UserRole; label: string }[] = [
     { value: 'student', label: 'Student' },
     { value: 'coordinator', label: 'Club Coordinator' },
-    { value: 'official', label: 'College Official' },
+    { value: 'official', label: 'Teacher / Official' },
     { value: 'admin', label: 'Admin' },
   ];
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <header className="sticky top-0 z-30 h-16 bg-card/80 backdrop-blur-md border-b border-border flex items-center justify-between px-6">
@@ -43,7 +50,12 @@ export function TopNav() {
       </div>
 
       {/* Right Section */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-3">
+        {/* Dark Mode Toggle */}
+        <Button variant="ghost" size="icon" onClick={toggleDarkMode} className="text-muted-foreground hover:text-foreground">
+          {isDarkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+        </Button>
+
         {/* Role Switcher (Demo Only) */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -94,10 +106,10 @@ export function TopNav() {
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate('/profile')}>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={logout} className="text-destructive">
+            <DropdownMenuItem onClick={handleLogout} className="text-destructive">
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

@@ -1,5 +1,6 @@
 import { useState, ReactNode } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { AppSidebar } from './AppSidebar';
 import { TopNav } from './TopNav';

@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   Home,
@@ -7,11 +7,16 @@ import {
   MessageSquare,
   FileText,
   User,
-  Settings,
   Shield,
   LogOut,
   ChevronLeft,
   GraduationCap,
+  Handshake,
+  UserCheck,
+  Trophy,
+  ClipboardList,
+  Eye,
+  Activity,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
@@ -29,24 +34,44 @@ interface NavItem {
   href: string;
   icon: React.ComponentType<{ className?: string }>;
   roles?: UserRole[];
+  section?: string;
 }
 
 const navItems: NavItem[] = [
-  { title: 'Home', href: '/', icon: Home },
+  // Common
+  { title: 'Dashboard', href: '/', icon: Home },
   { title: 'Clubs', href: '/clubs', icon: Users },
   { title: 'Events', href: '/events', icon: Calendar },
   { title: 'Messages', href: '/messages', icon: MessageSquare, roles: ['coordinator', 'official', 'admin'] },
+  { title: 'Results', href: '/results', icon: Trophy },
+  { title: 'Profile', href: '/profile', icon: User },
+  
+  // Coordinator
+  { title: 'Collaboration', href: '/collaboration', icon: Handshake, roles: ['coordinator', 'official'] },
+  { title: 'Volunteers', href: '/volunteers', icon: UserCheck, roles: ['coordinator', 'official'] },
+  
+  // Official
   { title: 'Requests', href: '/requests', icon: FileText, roles: ['coordinator', 'official', 'admin'] },
-  { title: 'Admin', href: '/admin', icon: Shield, roles: ['admin'] },
+  { title: 'Oversight', href: '/oversight', icon: Eye, roles: ['official'] },
+  
+  // Admin
+  { title: 'Approvals', href: '/admin', icon: Shield, roles: ['admin'] },
+  { title: 'Activity Logs', href: '/activity-logs', icon: Activity, roles: ['admin'] },
 ];
 
 export function AppSidebar({ isCollapsed, onToggle }: SidebarProps) {
   const location = useLocation();
+  const navigate = useNavigate();
   const { user, logout } = useAuth();
 
   const filteredNavItems = navItems.filter(
     (item) => !item.roles || (user && item.roles.includes(user.role))
   );
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <motion.aside
@@ -134,18 +159,8 @@ export function AppSidebar({ isCollapsed, onToggle }: SidebarProps) {
         )}
         
         <div className="flex flex-col gap-1">
-          <Link
-            to="/profile"
-            className={cn(
-              "flex items-center gap-3 px-3 py-2 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-colors",
-              isCollapsed && "justify-center"
-            )}
-          >
-            <User className="w-5 h-5" />
-            {!isCollapsed && <span className="text-sm">Profile</span>}
-          </Link>
           <button
-            onClick={logout}
+            onClick={handleLogout}
             className={cn(
               "flex items-center gap-3 px-3 py-2 rounded-lg text-sidebar-foreground hover:bg-destructive/20 hover:text-destructive transition-colors w-full",
               isCollapsed && "justify-center"
