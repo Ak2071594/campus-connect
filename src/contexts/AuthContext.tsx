@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 import { User, UserRole } from '@/types';
 import { mockUser } from '@/data/mockData';
 
@@ -8,7 +8,9 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   register: (data: RegisterData) => Promise<void>;
-  switchRole: (role: UserRole) => void; // For demo purposes
+  switchRole: (role: UserRole) => void;
+  isDarkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
 interface RegisterData {
@@ -23,10 +25,18 @@ interface RegisterData {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(mockUser); // Start logged in for demo
+  const [user, setUser] = useState<User | null>(mockUser);
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
 
   const login = async (email: string, password: string) => {
-    // Mock login - in real app, this would call an API
     await new Promise(resolve => setTimeout(resolve, 1000));
     setUser(mockUser);
   };
@@ -36,7 +46,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const register = async (data: RegisterData) => {
-    // Mock registration
     await new Promise(resolve => setTimeout(resolve, 1000));
     setUser({
       id: 'new-user',
@@ -54,6 +63,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(prev => !prev);
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -63,6 +76,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         logout,
         register,
         switchRole,
+        isDarkMode,
+        toggleDarkMode,
       }}
     >
       {children}
