@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Activity, Users, Calendar, Shield, UserCheck } from 'lucide-react';
+import { Activity, Users, Shield, UserCheck } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {

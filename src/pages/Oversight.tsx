@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Eye, Calendar, Users, Handshake, FileText } from 'lucide-react';
+import { Calendar, Handshake, FileText } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {

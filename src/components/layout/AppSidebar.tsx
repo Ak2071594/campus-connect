@@ -14,7 +14,6 @@ import {
   Handshake,
   UserCheck,
   Trophy,
-  ClipboardList,
   Eye,
   Activity,
 } from 'lucide-react';
