@@ -1,4 +1,4 @@
-import { User, Club, Event, Conversation, Message, AssistanceRequest } from '@/types';
+import { User, Club, Event, Conversation, Message, AssistanceRequest, VolunteerRequest, VolunteerApplication, CollaborationInvite, EventResult, ActivityLog } from '@/types';
 
 export const mockUser: User = {
   id: '1',
@@ -38,7 +38,7 @@ export const mockClubs: Club[] = [
     id: 'club-3',
     name: 'Sports & Fitness League',
     description: 'Promoting physical wellness through various sports activities, tournaments, and fitness programs.',
-    logo: 'https://images.unsplash.com/photo-1461896836934- voices&w=100&h=100&fit=crop',
+    logo: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=100&h=100&fit=crop',
     banner: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=1200&h=400&fit=crop',
     coordinator: { id: '3', name: 'Mike Chen', email: 'mike@uni.edu' },
     memberCount: 234,
@@ -97,11 +97,14 @@ export const mockEvents: Event[] = [
     clubName: 'Tech Innovators Club',
     clubLogo: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=100&h=100&fit=crop',
     isUpcoming: true,
+    registeredCount: 120,
+    needsVolunteers: true,
+    resultsPublished: false,
   },
   {
     id: 'event-2',
     title: 'Poetry Slam Night',
-    description: 'An evening of spoken word poetry featuring student performers and special guest poets. Express yourself through the power of words.',
+    description: 'An evening of spoken word poetry featuring student performers and special guest poets.',
     banner: 'https://images.unsplash.com/photo-1474631245212-32dc3c8310c6?w=1200&h=600&fit=crop',
     date: '2024-03-20',
     time: '06:00 PM',
@@ -110,11 +113,14 @@ export const mockEvents: Event[] = [
     clubName: 'Literary Arts Society',
     clubLogo: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=100&h=100&fit=crop',
     isUpcoming: true,
+    registeredCount: 85,
+    needsVolunteers: false,
+    resultsPublished: false,
   },
   {
     id: 'event-3',
     title: 'Inter-College Sports Meet',
-    description: 'The annual sports extravaganza featuring basketball, football, athletics, and more. Represent your college and bring home the glory!',
+    description: 'The annual sports extravaganza featuring basketball, football, athletics, and more.',
     banner: 'https://images.unsplash.com/photo-1461896836934-fffff520e6c3?w=1200&h=600&fit=crop',
     date: '2024-03-25',
     time: '08:00 AM',
@@ -123,11 +129,14 @@ export const mockEvents: Event[] = [
     clubName: 'Sports & Fitness League',
     clubLogo: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=100&h=100&fit=crop',
     isUpcoming: true,
+    registeredCount: 350,
+    needsVolunteers: true,
+    resultsPublished: true,
   },
   {
     id: 'event-4',
     title: 'Climate Action Summit',
-    description: 'A day-long conference on environmental sustainability with expert panels, workshops, and actionable takeaways.',
+    description: 'A day-long conference on environmental sustainability with expert panels and workshops.',
     banner: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&h=600&fit=crop',
     date: '2024-04-05',
     time: '10:00 AM',
@@ -136,11 +145,14 @@ export const mockEvents: Event[] = [
     clubName: 'Environmental Warriors',
     clubLogo: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=100&h=100&fit=crop',
     isUpcoming: true,
+    registeredCount: 200,
+    needsVolunteers: true,
+    resultsPublished: false,
   },
   {
     id: 'event-5',
     title: 'Spring Concert Series',
-    description: 'A night of live music featuring student bands and solo artists. Food, fun, and great vibes guaranteed!',
+    description: 'A night of live music featuring student bands and solo artists.',
     banner: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1200&h=600&fit=crop',
     date: '2024-04-12',
     time: '07:00 PM',
@@ -149,6 +161,9 @@ export const mockEvents: Event[] = [
     clubName: 'Music & Drama Collective',
     clubLogo: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=100&h=100&fit=crop',
     isUpcoming: true,
+    registeredCount: 500,
+    needsVolunteers: false,
+    resultsPublished: false,
   },
 ];
 
@@ -175,7 +190,7 @@ export const mockConversations: Conversation[] = [
     id: 'conv-3',
     name: 'Sports & Fitness League',
     avatar: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=100&h=100&fit=crop',
-    lastMessage: 'Let\'s organize a combined sports-tech event!',
+    lastMessage: "Let's organize a combined sports-tech event!",
     timestamp: 'Yesterday',
     unreadCount: 1,
     type: 'club',
@@ -213,7 +228,7 @@ export const mockRequests: AssistanceRequest[] = [
   {
     id: 'req-1',
     title: 'Convocation Ceremony Volunteers',
-    description: 'We need volunteers from various clubs to help manage the annual convocation ceremony. Tasks include guest management, decoration, and coordination.',
+    description: 'We need volunteers from various clubs to help manage the annual convocation ceremony.',
     officialId: 'off-1',
     officialName: 'Dr. Rajesh Kumar',
     officialDepartment: 'Dean of Students',
@@ -226,7 +241,7 @@ export const mockRequests: AssistanceRequest[] = [
   {
     id: 'req-2',
     title: 'Campus Cleanup Drive',
-    description: 'Organizing a campus-wide cleanup initiative. Need support from student clubs for awareness and participation.',
+    description: 'Organizing a campus-wide cleanup initiative.',
     officialId: 'off-2',
     officialName: 'Prof. Anjali Mehta',
     officialDepartment: 'Environment Committee',
@@ -239,7 +254,7 @@ export const mockRequests: AssistanceRequest[] = [
   {
     id: 'req-3',
     title: 'Open Day Technical Support',
-    description: 'Need technical club members to set up demo stations and give tours to prospective students during Open Day.',
+    description: 'Need technical club members to set up demo stations during Open Day.',
     officialId: 'off-3',
     officialName: 'Mr. Vikram Singh',
     officialDepartment: 'Admissions Office',
@@ -249,6 +264,157 @@ export const mockRequests: AssistanceRequest[] = [
     status: 'pending',
     createdAt: '2024-03-05',
   },
+];
+
+export const mockVolunteerRequests: VolunteerRequest[] = [
+  {
+    id: 'vol-1',
+    eventId: 'event-1',
+    eventTitle: 'HackVerse 2024',
+    clubId: 'club-1',
+    clubName: 'Tech Innovators Club',
+    requiredCount: 20,
+    appliedCount: 14,
+    skills: ['Event Management', 'Technical Support', 'Registration'],
+    deadline: '2024-03-10',
+    status: 'open',
+  },
+  {
+    id: 'vol-2',
+    eventId: 'event-3',
+    eventTitle: 'Inter-College Sports Meet',
+    clubId: 'club-3',
+    clubName: 'Sports & Fitness League',
+    requiredCount: 30,
+    appliedCount: 25,
+    skills: ['First Aid', 'Scorekeeping', 'Crowd Management'],
+    deadline: '2024-03-20',
+    status: 'open',
+  },
+  {
+    id: 'vol-3',
+    eventId: 'event-4',
+    eventTitle: 'Climate Action Summit',
+    clubId: 'club-6',
+    clubName: 'Environmental Warriors',
+    requiredCount: 15,
+    appliedCount: 15,
+    skills: ['Photography', 'Social Media', 'Hospitality'],
+    deadline: '2024-03-28',
+    status: 'closed',
+  },
+];
+
+export const mockVolunteerApplications: VolunteerApplication[] = [
+  {
+    id: 'app-1',
+    requestId: 'vol-1',
+    studentId: 'stu-1',
+    studentName: 'Rahul Verma',
+    studentAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
+    skills: ['Technical Support', 'Registration'],
+    status: 'pending',
+    appliedAt: '2024-03-02',
+  },
+  {
+    id: 'app-2',
+    requestId: 'vol-1',
+    studentId: 'stu-2',
+    studentName: 'Neha Gupta',
+    studentAvatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
+    skills: ['Event Management'],
+    status: 'approved',
+    appliedAt: '2024-03-01',
+  },
+  {
+    id: 'app-3',
+    requestId: 'vol-2',
+    studentId: 'stu-3',
+    studentName: 'Arjun Patel',
+    skills: ['First Aid', 'Scorekeeping'],
+    status: 'pending',
+    appliedAt: '2024-03-05',
+  },
+];
+
+export const mockCollaborations: CollaborationInvite[] = [
+  {
+    id: 'collab-1',
+    fromClubId: 'club-1',
+    fromClubName: 'Tech Innovators Club',
+    fromClubLogo: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=100&h=100&fit=crop',
+    toClubId: 'club-2',
+    toClubName: 'Literary Arts Society',
+    toClubLogo: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=100&h=100&fit=crop',
+    eventTitle: 'Tech-Poetry Fusion Night',
+    message: 'Hey! We would love to collaborate on a tech-poetry fusion event for the cultural fest.',
+    status: 'pending',
+    createdAt: '2024-03-01',
+  },
+  {
+    id: 'collab-2',
+    fromClubId: 'club-3',
+    fromClubName: 'Sports & Fitness League',
+    fromClubLogo: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=100&h=100&fit=crop',
+    toClubId: 'club-1',
+    toClubName: 'Tech Innovators Club',
+    toClubLogo: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=100&h=100&fit=crop',
+    eventTitle: 'Sports Analytics Workshop',
+    message: 'Let\'s combine sports and tech for an analytics workshop!',
+    status: 'accepted',
+    createdAt: '2024-02-20',
+  },
+  {
+    id: 'collab-3',
+    fromClubId: 'club-1',
+    fromClubName: 'Tech Innovators Club',
+    fromClubLogo: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=100&h=100&fit=crop',
+    toClubId: 'club-6',
+    toClubName: 'Environmental Warriors',
+    toClubLogo: 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=100&h=100&fit=crop',
+    eventTitle: 'Green Tech Hackathon',
+    message: 'Proposing a hackathon focused on environmental technology solutions.',
+    status: 'rejected',
+    createdAt: '2024-02-15',
+  },
+];
+
+export const mockResults: EventResult[] = [
+  {
+    id: 'result-1',
+    eventId: 'event-3',
+    eventTitle: 'Inter-College Sports Meet',
+    clubName: 'Sports & Fitness League',
+    publishedAt: '2024-03-26',
+    winners: [
+      { position: 1, name: 'Arjun Patel', department: 'Computer Science', prize: 'Gold Medal + ₹5000' },
+      { position: 2, name: 'Sneha Rao', department: 'Mechanical Eng.', prize: 'Silver Medal + ₹3000' },
+      { position: 3, name: 'Vikash Kumar', department: 'Electronics', prize: 'Bronze Medal + ₹2000' },
+    ],
+  },
+  {
+    id: 'result-2',
+    eventId: 'event-1',
+    eventTitle: 'HackVerse 2024',
+    clubName: 'Tech Innovators Club',
+    publishedAt: '2024-03-17',
+    winners: [
+      { position: 1, name: 'Team CodeCrafters', department: 'CS & IT', prize: '₹25,000 + Internship' },
+      { position: 2, name: 'Team DataMinds', department: 'Data Science', prize: '₹15,000' },
+      { position: 3, name: 'Team WebWizards', department: 'Information Tech.', prize: '₹10,000' },
+    ],
+  },
+];
+
+export const mockActivityLogs: ActivityLog[] = [
+  { id: 'log-1', action: 'Created event "HackVerse 2024"', actor: 'Alex Johnson', actorRole: 'coordinator', target: 'Tech Innovators Club', timestamp: '2024-03-01 09:30' },
+  { id: 'log-2', action: 'Approved club registration', actor: 'Admin', actorRole: 'admin', target: 'Environmental Warriors', timestamp: '2024-03-01 10:15' },
+  { id: 'log-3', action: 'Sent collaboration invite', actor: 'Alex Johnson', actorRole: 'coordinator', target: 'Literary Arts Society', timestamp: '2024-03-01 11:00' },
+  { id: 'log-4', action: 'Published event results', actor: 'Mike Chen', actorRole: 'coordinator', target: 'Inter-College Sports Meet', timestamp: '2024-03-02 14:30' },
+  { id: 'log-5', action: 'Created assistance request', actor: 'Dr. Rajesh Kumar', actorRole: 'official', target: 'Multiple Clubs', timestamp: '2024-03-02 16:00' },
+  { id: 'log-6', action: 'Registered for event', actor: 'Rahul Verma', actorRole: 'student', target: 'HackVerse 2024', timestamp: '2024-03-03 08:45' },
+  { id: 'log-7', action: 'Accepted collaboration invite', actor: 'Mike Chen', actorRole: 'coordinator', target: 'Sports Analytics Workshop', timestamp: '2024-03-03 12:00' },
+  { id: 'log-8', action: 'Applied as volunteer', actor: 'Neha Gupta', actorRole: 'student', target: 'HackVerse 2024', timestamp: '2024-03-04 09:15' },
 ];
 
 export const clubCategories = [
