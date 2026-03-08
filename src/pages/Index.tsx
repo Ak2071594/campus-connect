@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Calendar, Users, TrendingUp, Handshake, Trophy, FileText, Shield, Activity, Eye, Bell, ClipboardList } from 'lucide-react';
+import { ArrowRight, Calendar, Users, Handshake, Trophy, FileText, Shield, Activity, Eye } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { EventCarousel } from '@/components/events/EventCarousel';
 import { EventCard } from '@/components/events/EventCard';
 import { ClubCard } from '@/components/clubs/ClubCard';
 import { Badge } from '@/components/ui/badge';
-import { mockEvents, mockClubs, mockCollaborations, mockRequests, mockVolunteerRequests } from '@/data/mockData';
+import { mockEvents, mockClubs, mockCollaborations, mockVolunteerRequests } from '@/data/mockData';
 import { useAuth } from '@/contexts/AuthContext';
 
 const Index = () => {
