@@ -5,7 +5,7 @@ import { mockUser } from '@/data/mockData';
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string, role?: UserRole) => Promise<void>;
   logout: () => void;
   register: (data: RegisterData) => Promise<void>;
   switchRole: (role: UserRole) => void;
@@ -36,9 +36,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [isDarkMode]);
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string, role?: UserRole) => {
     await new Promise(resolve => setTimeout(resolve, 1000));
-    setUser(mockUser);
+    setUser({ ...mockUser, role: role || mockUser.role });
   };
 
   const logout = () => {
